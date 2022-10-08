@@ -29,6 +29,23 @@ class DrivableMap {
      */
 
 
+    /**
+     * Adds a Drivable object to the map at the given key if the key is not already in the map. Return
+     * true if successful.
+     *
+     * @param id The key for the added Drivable.
+     * @param item The Drivable object to be added.
+     * @return true if the operation succeeds, false if it does not.
+     */
+    public boolean addDrivable(String id, Drivable item) {
+        if (this.drivable_map.containsKey(id)) {
+            return false;
+        }
+        else {
+            this.drivable_map.put(id, item);
+            return true;
+        }
+    }
 
 
     /* TODO: Write a method named hasFasterThan that takes an int (a speed)
@@ -39,7 +56,16 @@ class DrivableMap {
      */
 
 
+    public boolean hasFasterThan(int speed) {
+        Drivable[] values = this.drivable_map.values().toArray(new Drivable[0]);
+        for (Drivable item : values) {
+            if (item.getMaxSpeed() >= speed) {
+                return true;
+            }
+        }
 
+        return false;
+    }
 
 
     /* TODO: Write a method named getTradable that takes no arguments and
@@ -48,6 +74,16 @@ class DrivableMap {
      */
 
 
+    public List<Tradable> getTradable() {
+        ArrayList<Drivable> rawItems = new ArrayList<Drivable>(this.drivable_map.values());
+        ArrayList<Tradable> items = new ArrayList<>();
+        for (Drivable item : rawItems) {
+            if (item instanceof Tradable) {
+                items.add((Tradable) item);
+            }
+        }
+        return items;
+    }
 
     
 }
